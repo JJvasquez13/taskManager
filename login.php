@@ -1,4 +1,7 @@
 <?php
+ini_set('session.gc_maxlifetime', 86400 * 30);
+session_set_cookie_params(86400 * 30);
+
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = mysqli_fetch_assoc($result);
 
             if (password_verify($password, $user['password'])) {
+                // Iniciar sesión de forma normal
                 $_SESSION['username'] = $user['username'];
+
+                // Redirigir al usuario después de iniciar sesión
                 header("Location: index.php");
                 exit;
             } else {
@@ -27,6 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "El usuario no existe.";
         }
     }
+} elseif (isset($_SESSION['username'])) {
+    // Verificar si ya hay una sesión activa
+    // Si ya está iniciada, no se hace nada
+    // Redirigir a la página principal si ya está logueado
+    header("Location: index.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
