@@ -2,11 +2,21 @@ CREATE DATABASE php_mysql_crud;
 
 use php_mysql_crud;
 
+DROP TABLE IF EXISTS task;
 CREATE TABLE task(
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 DESCRIBE task;
