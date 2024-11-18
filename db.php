@@ -8,4 +8,4 @@ $conn = mysqli_connect(
   'root',
   'juan123',
   'php_mysql_crud'
-) or die(mysqli_error($conn));
+) or die(mysqli_error($mysqli));
