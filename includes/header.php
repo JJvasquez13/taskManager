@@ -2,7 +2,14 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+// Establecer la política de seguridad de contenido (CSP)
+header("Content-Security-Policy: default-src 'self'; script-src 'self' https://stackpath.bootstrapcdn.com https://code.jquery.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://stackpath.bootstrapcdn.com https://bootswatch.com https://fonts.googleapis.com https://use.fontawesome.com; font-src 'self' https://fonts.gstatic.com https://stackpath.bootstrapcdn.com https://use.fontawesome.com; img-src 'self' data:;");
+
+include("db.php");
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

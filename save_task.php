@@ -16,18 +16,20 @@ if (isset($_POST['save_task'])) {
   $title = $_POST['title'];
   $description = $_POST['description'];
 
-  // Realizar la consulta para insertar la tarea en la base de datos
-  $query = "INSERT INTO task (title, description) VALUES ('$title', '$description')";
-  $result = mysqli_query($conn, $query);
+  // Usar una sentencia preparada para evitar inyección SQL
+  $query = "INSERT INTO task (title, description) VALUES (?, ?)";
+  $stmt = mysqli_prepare($conn, $query);
+  mysqli_stmt_bind_param($stmt, 'ss', $title, $description);
+  mysqli_stmt_execute($stmt);
 
   // Verificar si la consulta fue exitosa
-  if (!$result) {
-    die("Query Failed: " . mysqli_error($conn));
+  if (mysqli_stmt_affected_rows($stmt) > 0) {
+    $_SESSION['message'] = 'Task Saved Successfully';
+    $_SESSION['message_type'] = 'success';
+  } else {
+    $_SESSION['message'] = 'Error al guardar la tarea';
+    $_SESSION['message_type'] = 'danger';
   }
-
-  // Establecer el mensaje de éxito en la sesión
-  $_SESSION['message'] = 'Task Saved Successfully';
-  $_SESSION['message_type'] = 'success';
 
   header('Location: index.php');
   exit();

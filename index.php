@@ -58,8 +58,8 @@ include('includes/header.php');
 
           while ($row = mysqli_fetch_assoc($result_tasks)) { ?>
             <tr>
-              <td><?php echo $row['title']; ?></td>
-              <td><?php echo $row['description']; ?></td>
+              <td><?php echo htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'); ?></td>
+              <td><?php echo htmlspecialchars($row['description'], ENT_QUOTES, 'UTF-8'); ?></td>
               <td><?php echo $row['created_at']; ?></td>
               <td>
                 <?php if (isset($_SESSION['username'])): ?>
